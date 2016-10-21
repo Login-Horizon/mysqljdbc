@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="unnamed">
+    <output-path>$PROJECT_DIR$/out/artifacts/unnamed</output-path>
+    <root id="archive" name="unnamed.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="mysqljdbc" />
+      <element id="library" level="project" name="mysql-connector-java-5.1.38-bin" />
+      <element id="file-copy" path="G:/Program Files (x86)/MySQL/Connector.J 5.1/mysql-connector-java-5.1.38-bin.jar" />
+      <element id="extracted-dir" path="G:/Program Files (x86)/MySQL/Connector.J 5.1/mysql-connector-java-5.1.38-bin.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
