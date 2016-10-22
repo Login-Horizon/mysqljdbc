@@ -72,8 +72,38 @@ public class SQLGenerator implements LibBD {
 
     @Override
     public String UserInDb(String userId, String userEmail) {
+       String query= "select user_id,name from my_db.user_list  where user_id ="+userId+" and email = '"+userEmail+"'";
+        String username=null;
+        try {
+            // opening database connection to MySQL server
+            con = (Connection) DriverManager.getConnection(url, user, password);
 
-        return null;
+            // getting Statement object to execute query
+            stmt = (Statement) con.createStatement();
+
+            // executing SELECT query
+            rs = stmt.executeQuery(query);
+
+            //put results into array
+            if(rs.next()) {
+              username=  rs.getString("name")+":"+rs.getString("user_id")+":";
+            }
+
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+        } finally {
+            //close connection ,stmt and resultset here
+            try {
+                con.close();
+            } catch (SQLException se) { /*can't do anything */ }
+            try {
+                stmt.close();
+            } catch (SQLException se) { /*can't do anything */ }
+            try {
+                rs.close();
+            } catch (SQLException se) { /*can't do anything */ }
+        }
+        return username;
     }
 
     @Override
@@ -96,7 +126,7 @@ public class SQLGenerator implements LibBD {
                 "from user_list where user_id =userid ) "+
        " else CONCAT_WS(' ','book_status: book with the number',idbook_list,'is available ') "+
        " end book_status "+
-       "from book_list where CONCAT_WS('',name,author,genre) like '%Harry Harrison%'";
+       "from book_list where CONCAT_WS('',name,author,genre) like '%"+key+"%'";
         try {
             // opening database connection to MySQL server
             con = (Connection) DriverManager.getConnection(url, user, password);

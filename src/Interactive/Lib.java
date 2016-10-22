@@ -10,7 +10,7 @@ import java.util.Map;
 public interface Lib {
 
 
-    public String LogOn(String userEmail, int userId);
+    public  String LogOn(String userEmail, String userId);
 
     public String Registration(String userEmail, String userName);
 
