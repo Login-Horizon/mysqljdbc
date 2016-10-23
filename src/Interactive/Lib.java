@@ -1,5 +1,9 @@
 package Interactive;
 
+import JDBC.LibBD;
+import JDBC.ListDB;
+import javafx.collections.ObservableList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,5 +26,5 @@ public interface Lib {
 
     public int Return(int userId, int bookId, String all, Map myBookList);
 
-
+    public ObservableList<ListDB> AllBookToListBD(String[][] allBook);
 }

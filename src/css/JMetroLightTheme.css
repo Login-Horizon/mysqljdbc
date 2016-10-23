@@ -1043,11 +1043,11 @@
 }
 
 .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:focused {
-    -fx-background-color: #d3d3d3;
+    -fx-background-color: #0093ff;
 }
 
 .list-view:focused > .virtual-flow > .clipped-container > .sheet > .list-cell {
-    -fx-background-color: white;
+    -fx-background-color: #0093ff;
 }
 
 .list-view:focused > .virtual-flow > .clipped-container > .sheet > .list-cell:focused {

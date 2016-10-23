@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-
-<ListView fx:id="myl" opacity="0.13" orientation="VERTICAL" prefHeight="270.0" prefWidth="124.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" />
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="309.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
+            >
+   <children>
+      <ListView layoutX="18.0" layoutY="28.0" prefHeight="200.0" prefWidth="274.0" fx:id="myl" styleClass="item-title" />
+   </children>
+</AnchorPane>

@@ -26,12 +26,12 @@ public class SQLGenerator implements LibBD {
     public String[][] AllBooks() {
 
         String[][] book = new String[100][4];
-        String query = "select  CONCAT_WS(':','book_title',name) book_title," +
-                "CONCAT_WS(':','author',author) author," +
-                "CONCAT_WS(':','genre',genre)genre , case when userid is not null then" +
-                " (select CONCAT_WS(' ','book_status:', name,'took the book')\n" +
+        String query = "select  name book_title," +
+                " author," +
+                "genre , case when userid is not null then" +
+                " (select CONCAT_WS(' ', name,'took the book')\n" +
                 "        from user_list where user_id =userid )\n" +
-                "                else CONCAT_WS(' ','book_status: book with the number',idbook_list,'is available ')" +
+                "                else CONCAT_WS(' ',' book with the number',idbook_list,'is available ')" +
                 " end book_status  from book_list order by 1";
 
         try {

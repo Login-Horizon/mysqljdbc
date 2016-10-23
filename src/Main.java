@@ -1,10 +1,12 @@
 import Interactive.EnterThLib;
+import JDBC.ListDB;
 import JDBC.SQLGenerator;
 import PojectConfiguration.ConfigReader;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Driver;
 import com.mysql.jdbc.Statement;
 import com.sun.xml.internal.fastinfoset.sax.Properties;
+import javafx.collections.ObservableList;
 
 import java.io.IOException;
 import java.sql.Array;
@@ -12,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,7 +44,12 @@ class Main {
             public int Return(int userId, int bookId, String all, Map myBookList) {
                 return 0;
             }
-        }.LogOn("Username@email.com","2"));
+
+          @Override
+          public ObservableList<ListDB> AllBookToListBD(String[][] allBook) {
+              return null;
+          }
+      }.LogOn("Username@email.com","2"));
 //
 //        for (String[] item : booksList) {
 //            if (item[3] == null)
