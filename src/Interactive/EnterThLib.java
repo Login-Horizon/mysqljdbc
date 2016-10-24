@@ -25,6 +25,7 @@ public abstract class EnterThLib implements Lib{
             Matcher matcher = pattern.matcher(username);
             if (matcher.find()) {
                 ContainerValue.getInstance().id = (matcher.group(1));
+
             }
 
             return username;

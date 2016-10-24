@@ -39,6 +39,7 @@ public abstract class  BookWorm implements Lib{
         ObservableList<ListDB>  listofDB = FXCollections.observableArrayList();;
         ListDB  listDB = new ListDB();
         for(int j =0;j < allBook.length;j++){
+            if(allBook[j][0]!=null){
             listDB.setName(allBook[j][0]);
             System.out.println(listDB.getName());
         listDB.setAuthor(allBook[j][1]);
@@ -48,7 +49,7 @@ public abstract class  BookWorm implements Lib{
         listDB.setUserid(allBook[j][3]);
             System.out.println(listDB.getUserid());
 
-        listofDB.add(new ListDB(listDB.getName(),listDB.getAuthor(),listDB.getGenre(),listDB.getUserid()));}
+        listofDB.add(new ListDB(listDB.getName(),listDB.getAuthor(),listDB.getGenre(),listDB.getUserid()));}}
         return listofDB;
     }
 }

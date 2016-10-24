@@ -2,7 +2,6 @@ package Interactive;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -26,6 +25,7 @@ import javafx.stage.Stage;
  */
 public class Controller implements Initializable {
     Stage prevStage;
+    private String username;
     private ObservableList<ListDB> usersData;
 
     private void initData() {
@@ -65,7 +65,8 @@ public class Controller implements Initializable {
 
     @FXML
     private Button tOrR;
-
+    @FXML
+    private  Label header;
     @FXML
     private ListView myl;
     @FXML
@@ -92,10 +93,13 @@ public class Controller implements Initializable {
     @FXML
     private javafx.scene.control.TextField query;
 
-    public void gotoCreateTable() throws IOException {
+    @FXML
+    private javafx.scene.control.TextField bookId;
+
+    public void gotoCreateTable(String layout) throws IOException {
 
 
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/TableBook.FXML"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Interactive/views/TableBook.FXML"));
         Stage stage = new Stage();
         Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
 
@@ -110,26 +114,53 @@ public class Controller implements Initializable {
         genrecol.setPrefWidth(80.0);
         authorcol.setPrefWidth(150.0);
         tableUsers = (TableView) scene.lookup("#tableUsers");
+        header =(Label) scene.lookup("#header");
+        header.setText(layout);
 
         tableUsers.setItems(usersData);
         tableUsers.getColumns().addAll(namecol, authorcol, genrecol, useridcol);
 
 
         tableUsers.setEditable(true);
+
         System.out.println(namecol.getCellData(1));
         prevStage.setScene(scene);
+        prevStage.setTitle(username);
         prevStage.getScene().getStylesheets().add("css/JMetroDarkTheme.css");
 
         prevStage.show();
     }
 
     @FXML
+    public void TookOrReturn() throws IOException {
+        String alertMsg =null;
+      alertMsg= new SQLGenerator().ChangeTheBookOwner( bookId.getText());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("INFORMATION");
+        alert.setContentText(alertMsg);
+        alert.showAndWait();
+        if (alertMsg!=null){
+            setPrevStage((Stage) tOrR.getScene().getWindow());
+            initData();
+            gotoCreateTable("All books");
+        }
+        else {
+            alertMsg = "invalid value";
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText(alertMsg);
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
     public void onSearch() throws IOException {
         String search = query.getText();
+        System.out.println(search);
         if(search==null){
             setPrevStage((Stage) Login.getScene().getWindow());
             initData();
-            gotoCreateTable();
+            gotoCreateTable("All books");
         }
         else {
             usersData = FXCollections.observableArrayList(new BookWorm() {
@@ -148,8 +179,8 @@ public class Controller implements Initializable {
 
                 }
             }.AllBookToListBD(new SQLGenerator().BookByKey(search)));
-            setPrevStage((Stage) Login.getScene().getWindow());
-            gotoCreateTable();
+            setPrevStage((Stage) SearchKey.getScene().getWindow());
+            gotoCreateTable("Filtered");
         }
 
     }
@@ -188,7 +219,7 @@ public class Controller implements Initializable {
             alert.showAndWait();
             setPrevStage((Stage) Login.getScene().getWindow());
             initData();
-            gotoCreateTable();
+            gotoCreateTable("All books");
         }
     }
 
@@ -217,7 +248,7 @@ public class Controller implements Initializable {
                 return null;
             }
         }.LogOn(email.getText(), id.getText());
-        System.out.println(result);
+        username = result;
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
@@ -231,7 +262,7 @@ public class Controller implements Initializable {
             Login.setText(result);
             setPrevStage((Stage) Login.getScene().getWindow());
             initData();
-            gotoCreateTable();
+            gotoCreateTable("All books");
         }
 
 

@@ -5,6 +5,9 @@ package Interactive;
  */
 public class ContainerValue {
     public String id;
+    public String name;
+
+
     //------------
 
     private static ContainerValue instance = null;

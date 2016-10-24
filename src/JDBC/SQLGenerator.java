@@ -29,9 +29,9 @@ public class SQLGenerator implements LibBD {
         String[][] book = new String[100][4];
         String query = "select  name book_title," +
                 " author," +
-                "genre , case   when  userid ="+ ContainerValue.getInstance().id +" then 'You took  the book' " +
+                "genre , case   when  userid ="+ ContainerValue.getInstance().id +" then CONCAT_WS(':','You took  the book with number',idbook_list) " +
                 "when userid is not null then" +
-                " (select CONCAT_WS(' ', name,'took the book')\n" +
+                " (select CONCAT_WS(' ', name,'took the book with number:',idbook_list)\n" +
                 "        from user_list where user_id =userid )\n" +
                 "                else CONCAT_WS(' ',' book with the number',idbook_list,'is available ')" +
                 " end book_status  from book_list order by 1";
@@ -150,20 +150,63 @@ public class SQLGenerator implements LibBD {
     }
 
     @Override
-    public void ChangeTheBookOwner(int userId, int bookId) {
+    public String ChangeTheBookOwner(String bookId) {
+        String sqlquerry ="select IFNULL(userid,0) BOOK_STAT from my_db.book_list where (userid = "+ContainerValue.getInstance().id +
+                " or userid is null) "+ "and idbook_list ="+bookId;
+        String setnull ="UPDATE `my_db`.`book_list` SET  `userid` = null  where `idbook_list` ="+bookId;
+        String setUser ="UPDATE `my_db`.`book_list` SET  `userid` = "+ContainerValue.getInstance().id+"  where `idbook_list` ="+bookId;
 
+        try {
+            // opening database connection to MySQL server
+            con = (Connection) DriverManager.getConnection(url, user, password);
+
+            // getting Statement object to execute query
+            stmt = (Statement) con.createStatement();
+
+            // executing SELECT query
+
+            rs =stmt.executeQuery(sqlquerry);
+            if(rs.next()){
+
+                System.out.println(rs.getString("BOOK_STAT").equals("0"));
+                if (rs.getString("BOOK_STAT").equals("0")){
+                    stmt.executeUpdate(setUser);
+                    return "book taken";
+                }
+                else { stmt.executeUpdate(setnull);
+                return "book returned to the Library ";}
+            }
+            else
+                return  "book does not available ";
+            //put results into array
+
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+        } finally {
+            //close connection ,stmt and resultset here
+            try {
+                con.close();
+            } catch (SQLException se) { /*can't do anything */ }
+            try {
+                stmt.close();
+            } catch (SQLException se) { /*can't do anything */ }
+            try {
+                rs.close();
+            } catch (SQLException se) { /*can't do anything */ }
+        }
+        return null;
     }
 
     @Override
     public String[][] BookByKey(String key) {
         String[][] book = new String[100][4];
-        String query ="select  CONCAT_WS(':','book_title',name) book_title, "+
-        "CONCAT_WS(':','author',author) author, "+
-                "CONCAT_WS(':','genre',genre)genre , "+
-       " case when  userid is not null and userid ="+ContainerValue.getInstance().id+" then 'You took  the book' "+
-               " when userid is not null then (select CONCAT_WS(' ','book_status:', name,'took the book') "+
+        String query ="select  name book_title, "+
+        "author author, "+
+                "genre genre , "+
+       " case when  userid is not null and userid ="+ContainerValue.getInstance().id+" then CONCAT_WS(':','You took  the book with number',idbook_list) "+
+               " when userid is not null then (select CONCAT_WS(' ', name,'took the book with number:',idbook_list) "+
                 "from user_list where user_id =userid ) "+
-       " else CONCAT_WS(' ','book_status: book with the number',idbook_list,'is available ') "+
+       " else CONCAT_WS(' ','book with the number ',idbook_list,'is available ') "+
        " end book_status "+
        "from book_list where CONCAT_WS('',name,author,genre) like '%"+key+"%'";
         try {

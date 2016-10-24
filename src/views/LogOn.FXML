@@ -5,9 +5,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="184.0" prefWidth="203.0" xmlns="http://javafx.com/javafx/null"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interactive.Controller">
+<AnchorPane id="AnchorPane" fx:id="content"
+            maxHeight="-Infinity"
+            maxWidth="-Infinity"
+            minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="184.0"
+            prefWidth="203.0" xmlns="http://javafx.com/javafx/null"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Interactive.Controller">
     <children>
         <Button fx:id="Reg" layoutX="14.0" layoutY="149.0" mnemonicParsing="false" onAction="#onClickMethod"
                 prefWidth="81.0" text="New User"/>

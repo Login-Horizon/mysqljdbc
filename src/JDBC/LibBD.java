@@ -13,7 +13,7 @@ public interface LibBD {
 
     public String InsertNewUser(String userName, String userEmail);
 
-    public void ChangeTheBookOwner(int userId, int bookId);
+    public String ChangeTheBookOwner( String bookId);
 
     public String[][] BookByKey(String key);
 }
