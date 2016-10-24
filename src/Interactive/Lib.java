@@ -22,7 +22,7 @@ public interface Lib {
 
     public int TookBook(int userId, int bookId);
 
-    public int SearchBook(String keyword);
+    public String[][] SearchBook(String keyword);
 
     public int Return(int userId, int bookId, String all, Map myBookList);
 

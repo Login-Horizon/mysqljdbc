@@ -28,28 +28,29 @@ class Main {
         SQLGenerator sqlGenerator = new SQLGenerator();
         boolean empty = true;
         String[][] booksList;
+        System.out.print(sqlGenerator.InsertNewUser("Aysel","Aysel@email.com"));
         System.out.println(sqlGenerator.UserInDb("2","Username@email.com"));
-      System.out.println(  new EnterThLib() {
-            @Override
-            public int TookBook(int userId, int bookId) {
-                return 0;
-            }
-
-            @Override
-            public int SearchBook(String keyword) {
-                return 0;
-            }
-
-            @Override
-            public int Return(int userId, int bookId, String all, Map myBookList) {
-                return 0;
-            }
-
-          @Override
-          public ObservableList<ListDB> AllBookToListBD(String[][] allBook) {
-              return null;
-          }
-      }.LogOn("Username@email.com","2"));
+//      System.out.println(  new EnterThLib() {
+//            @Override
+//            public int TookBook(int userId, int bookId) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public String[][] SearchBook(String keyword) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public int Return(int userId, int bookId, String all, Map myBookList) {
+//                return 0;
+//            }
+//
+//          @Override
+//          public ObservableList<ListDB> AllBookToListBD(String[][] allBook) {
+//              return null;
+//          }
+//      }.LogOn("Username@email.com","2"));
 //
 //        for (String[] item : booksList) {
 //            if (item[3] == null)
@@ -59,7 +60,7 @@ class Main {
 //        String[] cls = new String[]{"cmd.exe", "/c", "cls"};
 //        Runtime.getRuntime().exec(cls);
 //        System.out.println("new life");
-//        booksList = sqlGenerator.BookByKey("kun");
+    booksList = sqlGenerator.BookByKey("kun");
 //        if (booksList.length == 0)
 //            System.out.println("foun nu");
 //

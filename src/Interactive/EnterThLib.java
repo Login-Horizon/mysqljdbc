@@ -33,10 +33,8 @@ public abstract class EnterThLib implements Lib{
     }
     @Override
     public String Registration(String userEmail, String userName) {
-        String query ="INSERT INTO `my_db`.`user_list` (`user_id`, `name`,  `email`) VALUES (null," +
-                userName +","
-                         + userEmail+");";
-        return null;
+
+        return sqlGenerator.InsertNewUser(userName,userEmail);
     }
 
     @Override

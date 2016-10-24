@@ -30,7 +30,7 @@ public class Controller implements Initializable {
 
     private void initData() {
 
-        usersData =FXCollections.observableArrayList( new BookWorm() {
+        usersData = FXCollections.observableArrayList(new BookWorm() {
             @Override
             public String LogOn(String userEmail, String userId) {
                 return null;
@@ -48,6 +48,7 @@ public class Controller implements Initializable {
         }.AllBookToListBD(new SQLGenerator().AllBooks()));
 
 
+
     }
 
     public void setPrevStage(Stage stage) {
@@ -59,6 +60,11 @@ public class Controller implements Initializable {
     private Button Reg;
     @FXML
     private Button Login;
+    @FXML
+    private Button SearchKey;
+
+    @FXML
+    private Button tOrR;
 
     @FXML
     private ListView myl;
@@ -83,9 +89,11 @@ public class Controller implements Initializable {
     private javafx.scene.control.TextField email;
     @FXML
     private javafx.scene.control.TextField id;
+    @FXML
+    private javafx.scene.control.TextField query;
 
     public void gotoCreateTable() throws IOException {
-        initData();
+
 
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/TableBook.FXML"));
         Stage stage = new Stage();
@@ -116,34 +124,74 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    public void onSearch() throws IOException {
+        String search = query.getText();
+        if(search==null){
+            setPrevStage((Stage) Login.getScene().getWindow());
+            initData();
+            gotoCreateTable();
+        }
+        else {
+            usersData = FXCollections.observableArrayList(new BookWorm() {
+                @Override
+                public String LogOn(String userEmail, String userId) {
+                    return null;
+                }
+
+                @Override
+                public String Registration(String userEmail, String userName) {
+                    return null;
+                }
+
+                @Override
+                public void LogOff() {
+
+                }
+            }.AllBookToListBD(new SQLGenerator().BookByKey(search)));
+            setPrevStage((Stage) Login.getScene().getWindow());
+            gotoCreateTable();
+        }
+
+    }
+    @FXML
     public void onClickMethod() throws IOException {
-        setPrevStage((Stage) Login.getScene().getWindow());
-        gotoCreateTable();
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        String alertResult = new EnterThLib() {
+            @Override
+            public int TookBook(int userId, int bookId) {
+                return 0;
+            }
+
+            @Override
+            public String[][] SearchBook(String keyword) {
+                return  null ;
+            }
+
+            @Override
+            public int Return(int userId, int bookId, String all, Map myBookList) {
+                return 0;
+            }
+
+            @Override
+            public ObservableList<ListDB> AllBookToListBD(String[][] allBook) {
+                return null;
+            }
+        }.Registration(email.getText(), id.getText());
+        if (alertResult == null) {
+            alert.setContentText("Invalid values");
+            alert.showAndWait();
+        } else {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setContentText("your id: " + alertResult + ".Do not forget it");
+            alert.showAndWait();
+            setPrevStage((Stage) Login.getScene().getWindow());
+            initData();
+            gotoCreateTable();
+        }
     }
 
-
-    public void gotoCreateCategory() throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/test.FXML"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
-
-        ListView listView = (ListView) scene.lookup("#myl");
-
-
-        listView.getItems().add("Item 1");
-        listView.getItems().add("Item 2");
-        listView.getItems().add("Item ff");
-
-
-        // Scene scene = new Scene(hbox, 300, 120);
-
-
-        prevStage.setScene(scene);
-        prevStage.getScene().getStylesheets().add("css/JMetroDarkTheme.css");
-
-        prevStage.show();
-    }
 
 
     @FXML
@@ -155,8 +203,8 @@ public class Controller implements Initializable {
             }
 
             @Override
-            public int SearchBook(String keyword) {
-                return 0;
+            public String[][] SearchBook(String keyword) {
+                return null;
             }
 
             @Override
@@ -171,7 +219,7 @@ public class Controller implements Initializable {
         }.LogOn(email.getText(), id.getText());
         System.out.println(result);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
 
         alert.setTitle("Error");
         alert.setHeaderText(null);
@@ -182,7 +230,8 @@ public class Controller implements Initializable {
         } else {
             Login.setText(result);
             setPrevStage((Stage) Login.getScene().getWindow());
-            gotoCreateCategory();
+            initData();
+            gotoCreateTable();
         }
 
 

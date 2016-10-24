@@ -11,7 +11,7 @@ public interface LibBD {
 
     public String UserInDb(String userId, String userEmail);
 
-    public int InsertNewUser(String userName, String userEmail);
+    public String InsertNewUser(String userName, String userEmail);
 
     public void ChangeTheBookOwner(int userId, int bookId);
 
